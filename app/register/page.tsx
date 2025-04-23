@@ -5,7 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Film } from "lucide-react"
+import { Film, Mail } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -15,6 +15,8 @@ import { MotionContainer } from "@/components/animations/motion-container"
 import { FadeIn } from "@/components/animations/fade-in"
 import { motion } from "framer-motion"
 import { MotionButton } from "@/components/animations/motion-button"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
 
 export default function RegisterPage() {
   const [name, setName] = useState("")
@@ -22,6 +24,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [loading, setLoading] = useState(false)
+  const [showConfirmation, setShowConfirmation] = useState(false)
   const router = useRouter()
   const { register } = useAuth()
   const { toast } = useToast()
@@ -41,21 +44,37 @@ export default function RegisterPage() {
     setLoading(true)
 
     try {
-      await register(name, email, password)
-      toast({
-        title: "Registro exitoso",
-        description: "Tu cuenta ha sido creada correctamente",
-      })
-      router.push("/explore")
-    } catch (error) {
-      toast({
-        title: "Error al registrarse",
-        description: "No se pudo crear la cuenta. Inténtalo de nuevo.",
-        variant: "destructive",
-      })
+      // Ahora register devuelve la respuesta directamente
+      const response = await register(name, email, password)
+      
+      // Si llegamos aquí sin error, el registro fue exitoso
+      // y mostramos el modal de confirmación
+      setShowConfirmation(true)
+    } catch (error: any) {
+      console.error("Error en registro:", error)
+      
+      // Verificamos los mensajes de error específicos
+      if (error?.message?.includes('email already exists')) {
+        toast({
+          title: "Error al registrarse",
+          description: "Este correo ya está registrado. Por favor intenta con otro.",
+          variant: "destructive",
+        })
+      } else {
+        toast({
+          title: "Error al registrarse",
+          description: error?.message || "No se pudo crear la cuenta. Inténtalo de nuevo.",
+          variant: "destructive",
+        })
+      }
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleConfirmationClose = () => {
+    // Redireccionar a la página de login cuando se cierra el modal
+    router.push("/login")
   }
 
   return (
@@ -140,6 +159,36 @@ export default function RegisterPage() {
           </Card>
         </FadeIn>
       </MotionContainer>
+
+      {/* Modal de confirmación de registro */}
+      <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+        <DialogContent className="w-[90%] max-w-md sm:max-w-[500px] border-gray-800 bg-gray-900 text-white">
+          <DialogHeader>
+            <DialogTitle className="text-xl text-center">¡Felicidades! Te has registrado exitosamente</DialogTitle>
+          </DialogHeader>
+          
+          <div className="flex flex-col items-center justify-center py-6">
+            <div className="bg-gray-800 rounded-full p-4 mb-4">
+              <Mail className="h-12 w-12 text-red-600" />
+            </div>
+            <p className="text-center text-gray-300 mb-2">
+              Para continuar, por favor, confirma tu email para iniciar sesión.
+            </p>
+            <p className="text-center text-gray-400 text-sm">
+              Hemos enviado un correo de confirmación a <span className="font-semibold text-white">{email}</span>
+            </p>
+          </div>
+
+          <DialogFooter>
+            <Button 
+              className="w-full bg-red-600 hover:bg-red-700"
+              onClick={handleConfirmationClose}
+            >
+              OK
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

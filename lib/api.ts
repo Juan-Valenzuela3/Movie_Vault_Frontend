@@ -72,17 +72,23 @@ export async function registerUser(
     throw new Error(errorText || "Error al registrar usuario")
   }
 
-  const data = (await response.json()) as AuthResponse
-
-  // Extraer información del usuario y token
+  // Al tratarse de un registro con confirmación por email, 
+  // es posible que no recibamos un token ni todos los datos del usuario aún
+  const data = await response.json()
+  
+  // Creamos un objeto de usuario con la información que tenemos disponible
   const user = {
-    name: data.user.user_metadata.name,
-    email: data.user.email,
+    name: name, // Usamos el nombre proporcionado en la solicitud
+    email: email // Usamos el email proporcionado en la solicitud
   }
 
+  // Para un registro con confirmación por email, podrías no recibir un token aún
+  // Verifica si hay token en la respuesta y si no, devuelve uno vacío
+  const token = data.access_token || ""
+
   return {
-    token: data.access_token,
-    user,
+    token: token,
+    user: user,
   }
 }
 

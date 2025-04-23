@@ -9,12 +9,18 @@ interface User {
   email: string
 }
 
+// Definir la interfaz para la respuesta del registro
+interface RegisterResponse {
+  token: string;
+  user: User;
+}
+
 interface AuthContextType {
   user: User | null
   token: string | null
   isAuthenticated: boolean
   login: (email: string, password: string) => Promise<void>
-  register: (name: string, email: string, password: string) => Promise<void>
+  register: (name: string, email: string, password: string) => Promise<RegisterResponse>
   logout: () => void
   updateUserData: (userData: User) => void
 }
@@ -24,7 +30,7 @@ const AuthContext = createContext<AuthContextType>({
   token: null,
   isAuthenticated: false,
   login: async () => {},
-  register: async () => {},
+  register: async () => ({ token: '', user: { name: '', email: '' } }),
   logout: () => {},
   updateUserData: () => {},
 })
@@ -62,14 +68,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Función para registrarse
   const register = async (name: string, email: string, password: string) => {
     const response = await registerUser(name, email, password)
-
-    setToken(response.token)
-    setUser(response.user)
-    setIsAuthenticated(true)
-
-    // Guardar en localStorage
-    localStorage.setItem("token", response.token)
-    localStorage.setItem("user", JSON.stringify(response.user))
+    
+    // Para un registro que requiere confirmación por email, no deberíamos
+    // establecer el token ni considerar al usuario como autenticado aún
+    
+    // Solo guardamos la información del usuario para mostrarla en el modal de confirmación
+    // pero sin autenticar la sesión
+    setUser({ name, email });
+    
+    // No establecemos el token ni isAuthenticated
+    // No guardamos información en localStorage
+    
+    return response;
   }
 
   // Función para cerrar sesión
