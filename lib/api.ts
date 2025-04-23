@@ -148,9 +148,11 @@ export async function getUserMovies(token: string): Promise<Movie[]> {
 // Función para añadir una película a la colección
 export async function addMovieToCollection(movie: Omit<Movie, "id" | "status">, token: string): Promise<Movie> {
   // Asegurarse de que la película tenga el estado "Pendiente" por defecto
+  // y que siempre tenga tmdbId si está disponible
   const movieWithStatus = {
     ...movie,
-    status: "PENDING"
+    status: "PENDING",
+    tmdbId: movie.tmdbId || null  // Asegurarnos de incluir el tmdbId
   }
 
   const response = await fetch(`${API_BASE_URL}/movies`, {
@@ -172,7 +174,8 @@ export async function addMovieToCollection(movie: Omit<Movie, "id" | "status">, 
   return {
     ...addedMovie,
     status: addedMovie.status === "WATCHED" ? "Visto" : "Pendiente",
-    id: addedMovie.idMovie
+    id: addedMovie.idMovie,
+    tmdbId: addedMovie.tmdbId || movie.tmdbId  // Preservar el tmdbId aunque el backend no lo devuelva
   };
 }
 

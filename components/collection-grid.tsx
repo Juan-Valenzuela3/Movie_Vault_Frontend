@@ -21,7 +21,7 @@ import { StaggerContainer } from "@/components/animations/stagger-container"
 import { StaggerItem } from "@/components/animations/stagger-item"
 import { motion } from "framer-motion"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { fetchMovieTrailer } from "@/lib/tmdb-api"
+import { fetchMovieTrailer, fetchMovieIdByTitle } from "@/lib/tmdb-api" // Añadido fetchMovieIdByTitle aquí
 import { useToast } from "@/hooks/use-toast"
 
 interface Movie {
@@ -63,15 +63,18 @@ export function CollectionGrid({ movies, onStatusChange, onDeleteMovie }: Collec
     setTrailerOpen(true)
 
     try {
+      let key = null;
       // Si tenemos el ID de TMDb, usarlo directamente
       if (movie.tmdbId) {
-        const key = await fetchMovieTrailer(movie.tmdbId)
-        setTrailerKey(key)
+        key = await fetchMovieTrailer(movie.tmdbId);
       } else {
-        // Si no, intentar buscar la película por título
-        const key = await fetchMovieTrailer(0) // Esto se reemplazará con fetchMovieIdByTitle cuando esté implementado
-        setTrailerKey(key)
+        // Si no hay tmdbId, intentar buscar la película por título
+        const movieId = await fetchMovieIdByTitle(movie.nameMovie);
+        if (movieId) {
+          key = await fetchMovieTrailer(movieId);
+        }
       }
+      setTrailerKey(key);
     } catch (error) {
       console.error("Error fetching trailer:", error)
       toast({

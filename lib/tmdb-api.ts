@@ -184,15 +184,27 @@ export async function fetchMovieTrailer(movieId: number): Promise<string | null>
 // Función para obtener el ID de TMDb de una película por su título
 export async function fetchMovieIdByTitle(title: string): Promise<number | null> {
   try {
-    const movies = await searchMovies(title)
+    const encodedTitle = encodeURIComponent(title);
+    const response = await fetch(
+      `${BASE_URL}/search/movie?query=${encodedTitle}&language=es-ES&include_adult=false`, 
+      options
+    );
 
-    if (movies.length > 0) {
-      return movies[0].id
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
     }
 
-    return null
+    const data = await response.json();
+    
+    // Si encontramos resultados, devolver el ID del primer resultado
+    if (data.results && data.results.length > 0) {
+      return data.results[0].id;
+    }
+    
+    // Si no hay resultados, devolver null
+    return null;
   } catch (error) {
-    console.error("Error fetching movie ID by title:", error)
-    return null
+    console.error("Error buscando película por título:", error);
+    return null;
   }
 }
