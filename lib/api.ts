@@ -1,5 +1,5 @@
 // URL base para la API del backend
-const API_BASE_URL = "http://localhost:8080"
+const API_BASE_URL = "https://movievault-backend.onrender.com"
 
 // Interfaz para el usuario
 interface User {
