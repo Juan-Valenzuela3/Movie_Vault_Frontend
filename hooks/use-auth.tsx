@@ -69,15 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const register = async (name: string, email: string, password: string) => {
     const response = await registerUser(name, email, password)
     
-    // Para un registro que requiere confirmación por email, no deberíamos
-    // establecer el token ni considerar al usuario como autenticado aún
-    
-    // Solo guardamos la información del usuario para mostrarla en el modal de confirmación
-    // pero sin autenticar la sesión
     setUser({ name, email });
-    
-    // No establecemos el token ni isAuthenticated
-    // No guardamos información en localStorage
     
     return response;
   }

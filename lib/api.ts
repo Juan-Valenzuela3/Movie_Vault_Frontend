@@ -82,8 +82,6 @@ export async function registerUser(
     email: email // Usamos el email proporcionado en la solicitud
   }
 
-  // Para un registro con confirmación por email, podrías no recibir un token aún
-  // Verifica si hay token en la respuesta y si no, devuelve uno vacío
   const token = data.access_token || ""
 
   return {
@@ -254,8 +252,6 @@ export async function updateUserProfile(profileData: ProfileUpdate, token: strin
     throw new Error(errorText || "Error al actualizar perfil")
   }
 
-  // Como la API no devuelve los datos actualizados del usuario,
-  // construimos un objeto con los datos que enviamos
   const updatedUser: User = {
     name: profileData.name || "",
     email: profileData.email || "",
