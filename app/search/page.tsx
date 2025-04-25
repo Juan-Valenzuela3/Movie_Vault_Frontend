@@ -116,7 +116,7 @@ export default function SearchPage() {
       <footer className="bg-gray-900 py-6">
         <div className="container mx-auto px-4 text-center text-gray-400">
           <p>© 2025 MovieVault. Todos los derechos reservados.</p>
-          <p className="mt-2 text-sm">Desarrollado con Next.js y la API de The Movie Database (TMDb).</p>
+          <p className="mt-2 text-sm">Desarrollado por <strong className="italic">Juan Valenzuela</strong></p>
         </div>
       </footer>
     </div>
