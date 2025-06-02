@@ -244,13 +244,13 @@ MovieVault incluye tracking de:
 ## 📱 Capturas de Pantalla
 
 ### **Página Principal**
-![Home Page](docs/screenshots/home.png)
+![Home Page](/public/Home-page.webp)
 
 ### **Exploración**
-![Explore Page](docs/screenshots/explore.png)
+![Explore Page](/public/Explorer-page.webp)
 
 ### **Mi Colección**
-![Collection Page](docs/screenshots/collection.png)
+![Collection Page](/public/Colletion-page.webp)
 
 ## 🏆 Reconocimientos
 
