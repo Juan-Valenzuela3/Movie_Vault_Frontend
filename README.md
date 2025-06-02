@@ -224,47 +224,6 @@ MovieVault utiliza un **tema oscuro elegante** con:
 - **Acentos**: Grises medios para contraste (#6B7280, #9CA3AF)
 - **Tipografía**: Inter font para legibilidad óptima
 
-## 🤝 Contribución
-
-MovieVault es un proyecto educativo, pero las contribuciones son bienvenidas:
-
-1. **Fork** el repositorio
-2. **Crea** una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
-3. **Commit** tus cambios (`git commit -m 'Añadir nueva funcionalidad'`)
-4. **Push** a la rama (`git push origin feature/nueva-funcionalidad`)
-5. **Abre** un Pull Request
-
-### **Guidelines para Contribuir**
-- Mantén el código limpio y bien documentado
-- Sigue las convenciones de TypeScript y ESLint
-- Añade tests para nuevas funcionalidades
-- Actualiza la documentación según sea necesario
-
-## 🐛 Issues y Soporte
-
-Si encuentras algún problema o tienes sugerencias:
-
-- **Issues**: [Crear nuevo issue](https://github.com/Juan-Valenzuela3/MovieVault-Frontend/issues)
-- **Discussions**: Para preguntas generales y discusiones
-- **Email**: Para soporte directo
-
-## 📈 Roadmap
-
-### **Próximas Funcionalidades**
-- [ ] **Recomendaciones personalizadas** basadas en gustos
-- [ ] **Sistema de reseñas** y calificaciones
-- [ ] **Listas temáticas** (favoritos, watchlist personalizada)
-- [ ] **Modo offline** con cache local
-- [ ] **Compartir colecciones** entre usuarios
-- [ ] **Integración con streaming** (Netflix, Prime Video, etc.)
-- [ ] **App móvil nativa** (React Native)
-
-### **Mejoras Técnicas**
-- [ ] **Tests E2E** con Playwright
-- [ ] **Performance monitoring** con analytics
-- [ ] **PWA** (Progressive Web App)
-- [ ] **Internacionalización** (i18n)
-
 ## 📊 Analytics y Métricas
 
 MovieVault incluye tracking de:
@@ -281,14 +240,6 @@ MovieVault incluye tracking de:
 - **Sanitización** de inputs de usuario
 - **HTTPS** obligatorio en producción
 - **Cookie policies** y GDPR compliance
-
-## 🌍 Demo en Vivo
-
-Puedes ver MovieVault en acción en:
-- **Demo**: [https://movievault-demo.vercel.app](https://movievault-demo.vercel.app)
-- **Documentación**: [Docs en línea](https://movievault-docs.vercel.app)
-
-*Nota: El demo puede tener funcionalidades limitadas*
 
 ## 📱 Capturas de Pantalla
 
@@ -331,8 +282,7 @@ GitHub: https://github.com/Juan-Valenzuela3
 
 ## 👨‍💻 Autor
 
-<div align="center">
-  <img src="https://avatars.githubusercontent.com/u/usuario" width="100" height="100" style="border-radius: 50%;" alt="Juan Valenzuela">
+<div align="center">  
   
   **Juan Valenzuela**
   
@@ -340,7 +290,6 @@ GitHub: https://github.com/Juan-Valenzuela3
   
   [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Juan-Valenzuela3)
   [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/juan-valenzuela-camelo)
-  [![Portfolio](https://img.shields.io/badge/Portfolio-FF5722?style=for-the-badge&logo=google-chrome&logoColor=white)](https://juan-valenzuela.dev)
 </div>
 
 ---
